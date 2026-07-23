@@ -1,0 +1,21 @@
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import { MotionConfig } from 'motion/react'
+
+import '@fontsource-variable/archivo/wdth.css'
+import '@fontsource-variable/archivo/wdth-italic.css'
+import '@fontsource/space-grotesk/400.css'
+import '@fontsource/space-grotesk/500.css'
+import '@fontsource/jetbrains-mono/400.css'
+import '@fontsource/jetbrains-mono/500.css'
+import './styles/index.css'
+
+import App from './App.tsx'
+
+createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <MotionConfig reducedMotion="user">
+      <App />
+    </MotionConfig>
+  </StrictMode>,
+)

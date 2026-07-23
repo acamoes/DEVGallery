@@ -1,0 +1,38 @@
+[
+  {
+    "id": "demo-vite",
+    "name": "Vite",
+    "description": "Entrada de demonstração — substitui-me pelas tuas apps. Adiciona novas entradas com o botão \"+ Adicionar app\" enquanto corres `npm run dev`.",
+    "url": "https://vite.dev",
+    "tags": [
+      "DEMO",
+      "DOCS"
+    ],
+    "previewMode": "iframe",
+    "createdAt": "2026-07-16T00:00:00.000Z"
+  },
+  {
+    "id": "demo-react",
+    "name": "React",
+    "description": "Outra entrada de demonstração com preview live. Qualquer web app acessível por URL aparece aqui em tempo real, em miniatura interativa no detalhe.",
+    "url": "https://react.dev",
+    "tags": [
+      "DEMO",
+      "DOCS"
+    ],
+    "previewMode": "iframe",
+    "createdAt": "2026-07-16T00:00:00.000Z"
+  },
+  {
+    "id": "demo-tailwind",
+    "name": "Tailwind CSS",
+    "description": "Terceira demonstração. Se um site bloquear iframes, muda o modo de preview para \"imagem\" e envia um screenshot — a galeria trata do resto.",
+    "url": "https://tailwindcss.com",
+    "tags": [
+      "DEMO",
+      "CSS"
+    ],
+    "previewMode": "iframe",
+    "createdAt": "2026-07-16T00:00:00.000Z"
+  }
+]

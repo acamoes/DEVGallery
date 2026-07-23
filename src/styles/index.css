@@ -1,0 +1,111 @@
+@import 'tailwindcss';
+
+/* ————————————————————————————————————————————————
+   DEV GALLERY — design system "ACID"
+   Preto profundo + amarelo-lima ácido, tipografia
+   display expandida/itálica, labels monospace.
+———————————————————————————————————————————————— */
+
+@theme {
+  --color-ink: #0a0a0a;
+  --color-surface: #121212;
+  --color-raised: #1a1a1a;
+  --color-line: #262626;
+  --color-acid: #d7ff3e;
+  --color-paper: #f4f4ef;
+  --color-mute: #8b8b85;
+  --color-danger: #ff5d45;
+
+  --font-display: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
+  --font-body: 'Space Grotesk', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
+
+  --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    scrollbar-color: var(--color-line) transparent;
+  }
+
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background-color: var(--color-acid);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-acid);
+    outline-offset: 2px;
+  }
+}
+
+/* Tipografia display — o look "LOGIX": pesada, expandida, colada. */
+@utility type-display {
+  font-family: var(--font-display);
+  font-weight: 860;
+  font-stretch: 122%;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.015em;
+}
+
+/* Labels monospace pequenas em uppercase (metadados, tags, chips). */
+@utility type-label {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Título gigante em contorno (empty states, marcas de água). */
+@utility type-outline {
+  color: transparent;
+  -webkit-text-stroke: 1.5px var(--color-line);
+}
+
+/* Varrimento luminoso enquanto um preview carrega. */
+.shimmer {
+  background-image: linear-gradient(
+    100deg,
+    transparent 32%,
+    rgb(255 255 255 / 0.045) 50%,
+    transparent 68%
+  );
+  background-size: 220% 100%;
+  animation: shimmer 1.7s linear infinite;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 120% 0;
+  }
+  to {
+    background-position: -120% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+  }
+}
+
+/* Grão de filme sobre toda a página — profundidade sem ruído visual. */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.045;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
