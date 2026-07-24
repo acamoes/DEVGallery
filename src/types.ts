@@ -25,6 +25,8 @@ export interface AppDraft {
   repoUrl?: string
   /** Imagem nova como data URL base64 (o servidor grava-a em public/previews). */
   imageData?: string
+  /** URL externo de imagem — usado em produção (GitHub Pages não grava ficheiros). */
+  imageUrl?: string
   /** Em edição: remover a imagem existente sem enviar outra. */
   removeImage?: boolean
 }

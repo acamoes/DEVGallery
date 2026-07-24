@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { AppEntry } from '../types'
+import { resolveImage } from '../lib/image'
 
 /** Largura virtual do viewport renderizado dentro do iframe em miniatura. */
 const FRAME_WIDTH = 1280
@@ -25,7 +26,7 @@ export function LivePreview({ app, interactive = false, className = '' }: LivePr
   const [loaded, setLoaded] = useState(false)
 
   const useIframe = app.previewMode === 'iframe' && Boolean(app.url)
-  const imageSrc = app.image ? import.meta.env.BASE_URL + app.image : null
+  const imageSrc = app.image ? resolveImage(app.image) : null
 
   // Mede o contentor para calcular a escala do iframe.
   useEffect(() => {

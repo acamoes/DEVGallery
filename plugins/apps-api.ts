@@ -121,7 +121,8 @@ export function appsApi(): Plugin {
             }
             if (draft.accent) entry.accent = String(draft.accent)
             if (draft.repoUrl?.trim()) entry.repoUrl = String(draft.repoUrl).trim()
-            if (draft.imageData) entry.image = await saveImage(newId, draft.imageData)
+            if (draft.imageUrl?.trim()) entry.image = String(draft.imageUrl).trim()
+            else if (draft.imageData) entry.image = await saveImage(newId, draft.imageData)
             apps.push(entry)
             await save(apps)
             return send(201, entry)
@@ -145,7 +146,10 @@ export function appsApi(): Plugin {
               if (repoUrl) entry.repoUrl = repoUrl
               else delete entry.repoUrl
             }
-            if (draft.imageData) {
+            if (draft.imageUrl?.trim()) {
+              await deleteImage(prev.image)
+              entry.image = String(draft.imageUrl).trim()
+            } else if (draft.imageData) {
               await deleteImage(prev.image)
               entry.image = await saveImage(id, draft.imageData)
             } else if (draft.removeImage) {

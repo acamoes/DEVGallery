@@ -1,7 +1,7 @@
 import { motion } from 'motion/react'
 
-/** Botão flutuante de adicionar app — só existe em `npm run dev`. */
-export function AdminFab({ onClick }: { onClick: () => void }) {
+/** Botão flutuante de adicionar app — visível em dev ou quando o admin está ativo. */
+export function AdminFab({ onClick, badge = 'dev' }: { onClick: () => void; badge?: string }) {
   return (
     <motion.button
       type="button"
@@ -18,7 +18,7 @@ export function AdminFab({ onClick }: { onClick: () => void }) {
       </span>
       Adicionar app
       <span className="type-label ml-1 border border-ink/30 px-1.5 py-0.5 text-[9px] not-italic">
-        dev
+        {badge}
       </span>
     </motion.button>
   )

@@ -3,8 +3,10 @@ import { motion } from 'motion/react'
 import type { AppDraft, AppEntry } from '../types'
 import { LivePreview } from './LivePreview'
 import { useModal } from '../hooks/useModal'
+import { isAbsoluteImage, resolveImage } from '../lib/image'
 
 const EASE = [0.22, 1, 0.36, 1] as const
+const IS_DEV = import.meta.env.DEV
 
 interface AppFormModalProps {
   /** null = criar nova; caso contrário edita a app dada. */
@@ -22,6 +24,9 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
   const [description, setDescription] = useState(app?.description ?? '')
   const [tagsInput, setTagsInput] = useState(app?.tags.join(', ') ?? '')
   const [previewMode, setPreviewMode] = useState<'iframe' | 'image'>(app?.previewMode ?? 'iframe')
+  const [imageUrl, setImageUrl] = useState(
+    app?.image && isAbsoluteImage(app.image) ? app.image : '',
+  )
   const [imageData, setImageData] = useState<string | null>(null)
   const [removeImage, setRemoveImage] = useState(false)
   const [busy, setBusy] = useState(false)
@@ -53,9 +58,13 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
     }
   }, [previewUrl])
 
-  const existingImage = !removeImage && !imageData && app?.image ? app.image : undefined
+  const trimmedImageUrl = imageUrl.trim()
+  // Imagem local (upload dev) ainda em vigor — URLs absolutos vivem no campo de URL.
+  const existingLocalImage =
+    !removeImage && !imageData && app?.image && !isAbsoluteImage(app.image) ? app.image : undefined
   const previewImageSrc =
-    imageData ?? (existingImage ? import.meta.env.BASE_URL + existingImage : null)
+    imageData ?? (trimmedImageUrl || (existingLocalImage ? resolveImage(existingLocalImage) : null))
+  const hasImage = Boolean(imageData || trimmedImageUrl || existingLocalImage)
 
   const handleFile = (file: File | undefined) => {
     if (!file) return
@@ -81,8 +90,10 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
       return setError('O link do repositório tem de começar por http:// ou https://.')
     if (previewMode === 'iframe' && !url.trim())
       return setError('O modo live precisa de um URL.')
-    if (previewMode === 'image' && !imageData && !existingImage)
-      return setError('O modo imagem precisa de um screenshot.')
+    if (trimmedImageUrl && !/^https?:\/\//.test(trimmedImageUrl))
+      return setError('O URL da imagem tem de começar por http:// ou https://.')
+    if (previewMode === 'image' && !hasImage)
+      return setError('O modo imagem precisa de uma imagem (URL ou upload).')
 
     setBusy(true)
     setError(null)
@@ -96,7 +107,8 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
         repoUrl: repoUrl.trim(),
       }
       if (imageData) draft.imageData = imageData
-      if (removeImage) draft.removeImage = true
+      else if (trimmedImageUrl) draft.imageUrl = trimmedImageUrl
+      else if (app?.image && !existingLocalImage) draft.removeImage = true
       await onSubmit(draft)
       onClose()
     } catch (submitError) {
@@ -221,43 +233,62 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
               </div>
             </Field>
 
-            <Field label={previewMode === 'image' ? 'Screenshot *' : 'Screenshot (fallback opcional)'}>
+            <Field label={previewMode === 'image' ? 'Imagem (URL) *' : 'Imagem (URL, fallback opcional)'}>
               <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={(event) => handleFile(event.target.files?.[0])}
+                type="url"
+                value={imageUrl}
+                onChange={(event) => {
+                  setImageUrl(event.target.value)
+                  setRemoveImage(false)
+                }}
+                placeholder="https://…/screenshot.png"
+                className={inputClass}
               />
-              <div className="flex items-center gap-3">
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="type-label border border-line px-4 py-3 text-paper transition-colors hover:border-paper"
-                >
-                  {previewImageSrc ? 'Substituir imagem' : 'Carregar imagem'}
-                </button>
-                {previewImageSrc && (
-                  <>
-                    <img
-                      src={previewImageSrc}
-                      alt="Miniatura da imagem escolhida"
-                      className="h-11 w-16 border border-line object-cover"
-                    />
+
+              {IS_DEV && (
+                <>
+                  <input
+                    ref={fileInputRef}
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={(event) => handleFile(event.target.files?.[0])}
+                  />
+                  <div className="mt-3 flex items-center gap-3">
                     <button
                       type="button"
-                      onClick={() => {
-                        setImageData(null)
-                        setRemoveImage(Boolean(app?.image))
-                        if (fileInputRef.current) fileInputRef.current.value = ''
-                      }}
-                      className="type-label text-mute transition-colors hover:text-danger"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="type-label border border-line px-4 py-3 text-paper transition-colors hover:border-paper"
                     >
-                      Remover
+                      {imageData ? 'Substituir upload' : 'ou carregar ficheiro'}
                     </button>
-                  </>
-                )}
-              </div>
+                    {(imageData || existingLocalImage) && (
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setImageData(null)
+                          setRemoveImage(Boolean(app?.image))
+                          if (fileInputRef.current) fileInputRef.current.value = ''
+                        }}
+                        className="type-label text-mute transition-colors hover:text-danger"
+                      >
+                        Remover upload
+                      </button>
+                    )}
+                  </div>
+                  <p className="type-label mt-2 text-mute/70">
+                    Upload só grava em dev; no site publicado usa um URL de imagem.
+                  </p>
+                </>
+              )}
+
+              {previewImageSrc && (
+                <img
+                  src={previewImageSrc}
+                  alt="Miniatura da imagem"
+                  className="mt-3 h-16 w-24 border border-line object-cover"
+                />
+              )}
             </Field>
           </div>
 
