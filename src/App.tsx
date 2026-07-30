@@ -1,23 +1,20 @@
-import { useEffect, useMemo, useState } from 'react'
-import { AnimatePresence, motion } from 'motion/react'
+import { useEffect, useState } from 'react'
+import { AnimatePresence, motion, useScroll, useTransform } from 'motion/react'
 import type { AppDraft, AppEntry } from './types'
 import { useApps } from './hooks/useApps'
-import { TopBar } from './components/TopBar'
+import { useSmoothScroll } from './hooks/useSmoothScroll'
 import { Hero } from './components/Hero'
-import { TagFilter } from './components/TagFilter'
-import { GalleryGrid } from './components/GalleryGrid'
+import { ProjectList } from './components/ProjectList'
 import { EmptyState } from './components/EmptyState'
 import { AppDetail } from './components/AppDetail'
 import { AdminFab } from './components/AdminFab'
 import { AppFormModal } from './components/AppFormModal'
 import { TokenModal } from './components/TokenModal'
-import { Footer } from './components/Footer'
 
 export default function App() {
   const { apps, addApp, updateApp, deleteApp, admin } = useApps()
+  useSmoothScroll()
 
-  const [activeTag, setActiveTag] = useState<string | null>(null)
-  const [query, setQuery] = useState('')
   const [selectedId, setSelectedId] = useState<string | null>(null)
   /** 'new' abre o formulário vazio; uma AppEntry abre-o em modo edição. */
   const [formTarget, setFormTarget] = useState<AppEntry | 'new' | null>(null)
@@ -37,23 +34,6 @@ export default function App() {
     if (!admin.isDev) setToast('Guardado no GitHub. O site publicado atualiza em ~1 min.')
   }
 
-  const tags = useMemo(
-    () => [...new Set(apps.flatMap((app) => app.tags))].sort(),
-    [apps],
-  )
-
-  const filtered = useMemo(() => {
-    const needle = query.trim().toLowerCase()
-    return apps.filter((app) => {
-      if (activeTag && !app.tags.includes(activeTag)) return false
-      if (!needle) return true
-      return [app.name, app.description, app.tags.join(' ')]
-        .join(' ')
-        .toLowerCase()
-        .includes(needle)
-    })
-  }, [apps, activeTag, query])
-
   const selected = selectedId ? (apps.find((app) => app.id === selectedId) ?? null) : null
   const selectedIndex = selected ? apps.indexOf(selected) : -1
 
@@ -72,41 +52,27 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-dvh">
+    <div className="min-h-dvh bg-ink">
       <div className="noise" aria-hidden />
 
-      <TopBar count={apps.length} />
-      <Hero count={apps.length} />
+      <ScrollMarker count={apps.length} />
 
-      <main className="mx-auto max-w-[88rem] px-5 pb-4 sm:px-8">
-        <TagFilter
-          tags={tags}
-          activeTag={activeTag}
-          onTagChange={setActiveTag}
-          query={query}
-          onQueryChange={setQuery}
-          shown={filtered.length}
-          total={apps.length}
-        />
+      <Hero />
 
-        {filtered.length > 0 ? (
-          <GalleryGrid apps={filtered} onSelect={(app) => setSelectedId(app.id)} />
+      <main>
+        {apps.length > 0 ? (
+          <ProjectList apps={apps} onSelect={(app) => setSelectedId(app.id)} />
         ) : (
-          <EmptyState
-            filtered={apps.length > 0}
-            onAdd={canEdit ? () => setFormTarget('new') : undefined}
-          />
+          <EmptyState onAdd={canEdit ? () => setFormTarget('new') : undefined} />
         )}
       </main>
-
-      <Footer />
 
       {/* Em produção: aceder/gerir o token de administração. */}
       {!admin.isDev && (
         <button
           type="button"
           onClick={() => setShowToken(true)}
-          className="type-label fixed bottom-5 left-5 z-30 border border-line bg-ink/80 px-4 py-3 text-mute backdrop-blur-sm transition-colors hover:border-acid hover:text-acid sm:bottom-8 sm:left-8"
+          className="type-label fixed bottom-5 left-5 z-30 border border-line bg-ink/80 px-4 py-3 text-mute backdrop-blur-sm transition-colors hover:border-paper hover:text-paper sm:bottom-8 sm:left-8"
         >
           {admin.tokenConfigured ? '⚙ Admin' : '⚙ Ativar edição'}
         </button>
@@ -153,7 +119,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 12 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="type-label fixed inset-x-4 bottom-24 z-40 mx-auto max-w-md border border-acid bg-ink/90 px-5 py-4 text-center text-paper backdrop-blur-sm sm:bottom-8"
+            className="type-label fixed inset-x-4 bottom-24 z-40 mx-auto max-w-md border border-paper bg-ink/90 px-5 py-4 text-center text-paper backdrop-blur-sm sm:bottom-8"
             role="status"
           >
             {toast}
@@ -161,5 +127,50 @@ export default function App() {
         )}
       </AnimatePresence>
     </div>
+  )
+}
+
+/**
+ * Barra fina no topo que só aparece depois do hero sair do ecrã — o ecrã de
+ * abertura fica assim completamente limpo, sem deixar a página longa sem
+ * qualquer ponto de referência.
+ */
+function ScrollMarker({ count }: { count: number }) {
+  const { scrollY } = useScroll()
+  const [viewport, setViewport] = useState(() => window.innerHeight)
+
+  useEffect(() => {
+    // Só re-medir quando a largura muda. Em telemóvel, esconder a barra de
+    // endereço altera innerHeight a meio do scroll; reagir a isso deslocava
+    // o limiar do fade e fazia a barra saltar.
+    let lastWidth = window.innerWidth
+    const onResize = () => {
+      if (window.innerWidth === lastWidth) return
+      lastWidth = window.innerWidth
+      setViewport(window.innerHeight)
+    }
+    window.addEventListener('resize', onResize)
+    return () => window.removeEventListener('resize', onResize)
+  }, [])
+
+  const opacity = useTransform(scrollY, [viewport * 0.55, viewport * 0.95], [0, 1])
+
+  return (
+    <motion.div
+      style={{ opacity }}
+      className="pointer-events-none fixed inset-x-0 top-0 z-30 flex items-center justify-between px-5 py-5 sm:px-10"
+    >
+      {/* Véu em vez de mix-blend-difference: a inversão colapsava para 1:1
+          sobre cinzas médios, e é disso que são feitos os previews em modo
+          escuro. O gradiente garante branco puro legível em qualquer fundo. */}
+      <div
+        className="absolute inset-x-0 top-0 -z-10 h-24 bg-gradient-to-b from-ink via-ink/70 to-transparent"
+        aria-hidden
+      />
+      <span className="type-label text-paper">DEV Gallery</span>
+      <span className="type-label text-paper">
+        {String(count).padStart(2, '0')} {count === 1 ? 'Projeto' : 'Projetos'}
+      </span>
+    </motion.div>
   )
 }

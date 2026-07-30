@@ -1,20 +1,31 @@
 @import 'tailwindcss';
 
+/* Os playbooks e scripts do Impeccable contêm strings que parecem classes
+   utilitárias. Sem isto o Tailwind varre-os e gera ~6 kB de CSS morto que
+   viaja para o site publicado. */
+@source not "../../.claude";
+@source not "../../.impeccable";
+/* PRODUCT.md e DESIGN.md citam nomes de classes em prosa; não são markup. */
+@source not "../../*.md";
+
 /* ————————————————————————————————————————————————
-   DEV GALLERY — design system "ACID"
-   Preto profundo + amarelo-lima ácido, tipografia
-   display expandida/itálica, labels monospace.
+   DEV GALLERY — design system "MONO"
+   Preto puro + branco. Nenhum matiz: a única cor da
+   página vem dos previews live das próprias apps.
+   Tipografia display expandida, labels monospace.
 ———————————————————————————————————————————————— */
 
 @theme {
-  --color-ink: #0a0a0a;
-  --color-surface: #121212;
-  --color-raised: #1a1a1a;
-  --color-line: #262626;
-  --color-acid: #d7ff3e;
-  --color-paper: #f4f4ef;
-  --color-mute: #8b8b85;
-  --color-danger: #ff5d45;
+  --color-ink: #000000;
+  --color-surface: #0b0b0b;
+  --color-line: #1c1c1c;
+  --color-paper: #ffffff;
+  /* 4.89:1 sobre --color-ink. #6f6f6f dava 4.18:1 e falhava o mínimo AA. */
+  --color-mute: #7a7a7a;
+  --color-danger: #e0523c;
+  /* Contorno das marcas de água. Distinto de --color-line: os filetes
+     estruturam, isto sussurra. 1.85:1 — legível como palavra, não como texto. */
+  --color-watermark: #3a3a3a;
 
   --font-display: 'Archivo Variable', 'Archivo', system-ui, sans-serif;
   --font-body: 'Space Grotesk', system-ui, sans-serif;
@@ -38,17 +49,17 @@
   }
 
   ::selection {
-    background-color: var(--color-acid);
+    background-color: var(--color-paper);
     color: var(--color-ink);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-acid);
-    outline-offset: 2px;
+    outline: 2px solid var(--color-paper);
+    outline-offset: 3px;
   }
 }
 
-/* Tipografia display — o look "LOGIX": pesada, expandida, colada. */
+/* Tipografia display — pesada, expandida, colada. */
 @utility type-display {
   font-family: var(--font-display);
   font-weight: 860;
@@ -56,6 +67,16 @@
   text-transform: uppercase;
   line-height: 0.92;
   letter-spacing: -0.015em;
+}
+
+/* Escala monumental: hero e nomes de projeto. */
+@utility type-huge {
+  font-family: var(--font-display);
+  font-weight: 880;
+  font-stretch: 125%;
+  text-transform: uppercase;
+  line-height: 0.84;
+  letter-spacing: -0.03em;
 }
 
 /* Labels monospace pequenas em uppercase (metadados, tags, chips). */
@@ -70,7 +91,7 @@
 /* Título gigante em contorno (empty states, marcas de água). */
 @utility type-outline {
   color: transparent;
-  -webkit-text-stroke: 1.5px var(--color-line);
+  -webkit-text-stroke: 1.5px var(--color-watermark);
 }
 
 /* Varrimento luminoso enquanto um preview carrega. */
@@ -78,7 +99,7 @@
   background-image: linear-gradient(
     100deg,
     transparent 32%,
-    rgb(255 255 255 / 0.045) 50%,
+    rgb(255 255 255 / 0.06) 50%,
     transparent 68%
   );
   background-size: 220% 100%;
@@ -98,6 +119,12 @@
   .shimmer {
     animation: none;
   }
+
+  /* animate-pulse é animação CSS: o reducedMotion do Motion não lhe chega.
+     Os pontos do "Live" e do skeleton ficavam a pulsar para sempre. */
+  .animate-pulse {
+    animation: none;
+  }
 }
 
 /* Grão de filme sobre toda a página — profundidade sem ruído visual. */
@@ -106,6 +133,6 @@
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.045;
+  opacity: 0.05;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }

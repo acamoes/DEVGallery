@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Skills de agentes e configuração local — reinstalam-se com `npx impeccable install`.
+# O PRODUCT.md, o DESIGN.md e o .impeccable/ são do projeto e ficam versionados.
+.claude/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

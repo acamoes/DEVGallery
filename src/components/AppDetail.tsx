@@ -60,7 +60,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
   return (
     <motion.div
       ref={containerRef}
-      className="fixed inset-0 z-40 overflow-y-auto bg-ink/70 backdrop-blur-md"
+      className="fixed inset-0 z-40 overflow-y-auto bg-ink/85 backdrop-blur-xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -71,7 +71,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
       aria-label={`Detalhes de ${app.name}`}
     >
       <motion.div
-        className="relative mx-auto my-6 w-[min(1180px,calc(100vw-2rem))] border border-line bg-ink sm:my-12"
+        className="relative mx-auto my-6 w-[min(1280px,calc(100vw-2rem))] border border-line bg-ink sm:my-12"
         initial={{ opacity: 0, y: 48 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 24 }}
@@ -85,16 +85,19 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
             className="flex items-start justify-between gap-6 border-b border-line p-6 sm:p-8"
           >
             <div className="min-w-0">
-              <p className="type-label text-acid">
-                {String(index + 1).padStart(2, '0')} / App
-              </p>
-              <h2 className="type-display mt-3 truncate text-4xl italic sm:text-6xl">{app.name}</h2>
+              <p className="type-label text-mute">{String(index + 1).padStart(2, '0')}</p>
+              {/* Sem truncate: é o único ecrã onde o nome tem de aparecer
+                  inteiro. O min-w-0 do contentor e a quebra por caracter
+                  seguram nomes longos sem os cortar. */}
+              <h2 className="type-huge mt-4 text-4xl italic [overflow-wrap:anywhere] sm:text-6xl">
+                {app.name}
+              </h2>
             </div>
             <button
               type="button"
               onClick={onClose}
               aria-label="Fechar"
-              className="grid size-11 shrink-0 place-items-center border border-line text-mute transition-colors hover:border-acid hover:text-acid"
+              className="grid size-11 shrink-0 place-items-center border border-line text-mute transition-colors hover:border-paper hover:text-paper"
             >
               ✕
             </button>
@@ -104,7 +107,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
             {/* Preview grande e interativo */}
             <motion.div
               variants={settle}
-              className="relative aspect-[16/11] border-b border-line lg:aspect-auto lg:min-h-[560px] lg:border-r lg:border-b-0"
+              className="relative aspect-[16/10] border-b border-line lg:aspect-auto lg:min-h-[560px] lg:border-r lg:border-b-0"
             >
               <LivePreview app={app} interactive />
             </motion.div>
@@ -113,7 +116,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
             <motion.div variants={rise} className="flex flex-col gap-7 p-6 sm:p-8">
               <div>
                 <p className="type-label text-mute">Sobre</p>
-                <p className="mt-3 text-[15px] leading-relaxed whitespace-pre-line text-paper/90">
+                <p className="mt-3 text-[15px] leading-relaxed whitespace-pre-line text-paper">
                   {app.description || '—'}
                 </p>
               </div>
@@ -133,7 +136,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
 
               <div className="space-y-2">
                 <p className="type-label text-mute">Meta</p>
-                <p className="type-label truncate text-paper/80" title={app.url}>
+                <p className="type-label truncate text-paper" title={app.url}>
                   {app.url || '—'}
                 </p>
                 <p className="type-label text-mute">
@@ -152,7 +155,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
                     href={app.url}
                     target="_blank"
                     rel="noreferrer"
-                    className="type-display block bg-acid px-6 py-4 text-center text-lg text-ink italic transition-colors hover:bg-paper"
+                    className="type-display block bg-paper px-6 py-4 text-center text-lg text-ink italic transition-colors hover:bg-mute"
                   >
                     Abrir app ↗
                   </a>
@@ -163,7 +166,7 @@ export function AppDetail({ app, index, onClose, onEdit, onDelete }: AppDetailPr
                     href={app.repoUrl}
                     target="_blank"
                     rel="noreferrer"
-                    className="type-label block border border-line py-3.5 text-center text-paper transition-colors hover:border-acid hover:text-acid"
+                    className="type-label block border border-line py-3.5 text-center text-paper transition-colors hover:border-paper"
                   >
                     Código fonte ↗
                   </a>

@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-29T00:00:00.000Z",
+  "title": "Design System: DEV Gallery",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "neutral",
+        "displayName": "Preto de Sala",
+        "canonical": "#000000",
+        "tonalRamp": ["#000000", "#0b0b0b", "#1c1c1c", "#3a3a3a", "#6f6f6f", "#9c9c9c", "#c9c9c9", "#ffffff"]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Penumbra",
+        "canonical": "#0b0b0b",
+        "tonalRamp": ["#000000", "#0b0b0b", "#161616", "#2a2a2a", "#4d4d4d", "#7d7d7d", "#b4b4b4", "#f0f0f0"]
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Risco de Parede",
+        "canonical": "#1c1c1c",
+        "tonalRamp": ["#050505", "#0f0f0f", "#1c1c1c", "#333333", "#565656", "#858585", "#bcbcbc", "#f2f2f2"]
+      },
+      "paper": {
+        "role": "primary",
+        "displayName": "Branco de Projeção",
+        "canonical": "#ffffff",
+        "tonalRamp": ["#1a1a1a", "#333333", "#4d4d4d", "#6f6f6f", "#999999", "#c2c2c2", "#e6e6e6", "#ffffff"]
+      },
+      "mute": {
+        "role": "neutral",
+        "displayName": "Cinza de Legenda",
+        "canonical": "#7a7a7a",
+        "tonalRamp": ["#141414", "#242424", "#3a3a3a", "#545454", "#7a7a7a", "#9a9a9a", "#c4c4c4", "#ededed"]
+      },
+      "watermark": {
+        "role": "neutral",
+        "displayName": "Cinza de Marca de Água",
+        "canonical": "#3a3a3a",
+        "tonalRamp": ["#0a0a0a", "#171717", "#262626", "#3a3a3a", "#5c5c5c", "#8a8a8a", "#bdbdbd", "#efefef"]
+      },
+      "danger": {
+        "role": "tertiary",
+        "displayName": "Vermelho de Emergência",
+        "canonical": "#e0523c",
+        "tonalRamp": ["#2b0d07", "#4d1a11", "#74271b", "#9c3626", "#c14631", "#e0523c", "#ec8672", "#f8c7bc"]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Masthead do ecrã de abertura. Uma única ocorrência por página."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Nome de cada projeto e títulos de painéis de sobreposição."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Botões primários e cabeçalhos de formulário."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Descrições de projeto e texto corrido, até cerca de 65ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Todo o metadado: numeração, tags, estados, datas, botões secundários."
+      }
+    },
+    "shadows": [
+      {
+        "name": "fab-halo",
+        "value": "0 12px 40px rgba(255, 255, 255, 0.18)",
+        "purpose": "Única sombra do sistema. Halo branco difuso sob o botão flutuante de administração. A elevação foi deixada explicitamente em aberto pelo autor."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
+        "purpose": "Easing único do sistema. Entradas, revelações por scroll e transições de painel."
+      },
+      {
+        "name": "duration-choreography",
+        "value": "500ms–1000ms",
+        "purpose": "Coreografia de entrada e revelação por scroll. Deliberadamente lenta; não reduzir."
+      },
+      {
+        "name": "duration-response",
+        "value": "150ms–250ms",
+        "purpose": "Alvo para resposta a input (hover, foco, estado). A implementação atual usa 500–700ms; encurtar é refinamento por fazer."
+      },
+      {
+        "name": "scroll-lerp",
+        "value": "0.09",
+        "purpose": "Inércia do scroll suave (Lenis). Desativado sob prefers-reduced-motion."
+      }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal. Inversão total: branco sobre preto, cantos vivos.",
+      "html": "<button class=\"ds-btn-primary\">Abrir app ↗</button>",
+      "css": ".ds-btn-primary { background: var(--color-paper, #ffffff); color: var(--color-ink, #000000); font-family: 'Archivo Variable', Archivo, system-ui, sans-serif; font-weight: 860; font-stretch: 122%; font-style: italic; text-transform: uppercase; font-size: 1.125rem; line-height: 0.92; letter-spacing: -0.015em; padding: 16px 24px; border: none; border-radius: 0; cursor: pointer; transition: background-color 200ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-btn-primary:hover { background: var(--color-mute, #6f6f6f); } .ds-btn-primary:focus-visible { outline: 2px solid var(--color-paper, #ffffff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Ghost Button",
+      "kind": "button",
+      "refersTo": "button-ghost",
+      "description": "Ação secundária. Filete de 1px, rótulo monoespaçado.",
+      "html": "<button class=\"ds-btn-ghost\">Código fonte ↗</button>",
+      "css": ".ds-btn-ghost { background: transparent; color: var(--color-mute, #6f6f6f); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 14px 24px; border: 1px solid var(--color-line, #1c1c1c); border-radius: 0; cursor: pointer; transition: color 200ms, border-color 200ms; } .ds-btn-ghost:hover { color: var(--color-paper, #ffffff); border-color: var(--color-paper, #ffffff); } .ds-btn-ghost:focus-visible { outline: 2px solid var(--color-paper, #ffffff); outline-offset: 3px; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-text",
+      "description": "Campo de texto. Fundo transparente, filete que acende no foco.",
+      "html": "<input class=\"ds-input-text\" type=\"text\" placeholder=\"https://…\" />",
+      "css": ".ds-input-text { width: 100%; background: transparent; color: var(--color-paper, #ffffff); font-family: 'Space Grotesk', system-ui, sans-serif; font-size: 0.875rem; padding: 12px 16px; border: 1px solid var(--color-line, #1c1c1c); border-radius: 0; outline: none; transition: border-color 200ms; } .ds-input-text::placeholder { color: rgba(111, 111, 111, 0.5); } .ds-input-text:focus { border-color: var(--color-paper, #ffffff); }"
+    },
+    {
+      "name": "Tag Chip",
+      "kind": "chip",
+      "refersTo": "chip-tag",
+      "description": "Etiqueta de projeto. Nua nas secções da galeria, com filete nos painéis.",
+      "html": "<span class=\"ds-chip-tag\">DEMO</span>",
+      "css": ".ds-chip-tag { display: inline-block; color: var(--color-mute, #6f6f6f); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px; border: 1px solid var(--color-line, #1c1c1c); border-radius: 0; }"
+    },
+    {
+      "name": "Live Badge",
+      "kind": "chip",
+      "refersTo": "chip-tag",
+      "description": "Indicador de preview em direto, com ponto pulsante. Único círculo do sistema.",
+      "html": "<span class=\"ds-badge-live\"><span class=\"ds-badge-live__dot\"></span>Live</span>",
+      "css": ".ds-badge-live { display: inline-flex; align-items: center; gap: 8px; background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(4px); color: var(--color-paper, #ffffff); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.625rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 10px; border-radius: 0; } .ds-badge-live__dot { width: 6px; height: 6px; border-radius: 9999px; background: var(--color-paper, #ffffff); animation: ds-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; } @keyframes ds-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }"
+    },
+    {
+      "name": "Preview Frame",
+      "kind": "card",
+      "refersTo": "frame-preview",
+      "description": "Componente assinatura. Moldura 16:10 que contém a aplicação real a correr; dessaturada em repouso, cor plena no hover.",
+      "html": "<div class=\"ds-frame-preview\"><div class=\"ds-frame-preview__stage\">A carregar</div></div>",
+      "css": ".ds-frame-preview { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--color-surface, #0b0b0b); border: 1px solid var(--color-line, #1c1c1c); border-radius: 0; } .ds-frame-preview__stage { position: absolute; inset: 0; display: grid; place-items: center; color: var(--color-mute, #6f6f6f); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.6875rem; letter-spacing: 0.14em; text-transform: uppercase; filter: grayscale(0.6) brightness(0.85); transition: filter 250ms cubic-bezier(0.22, 1, 0.36, 1); } .ds-frame-preview:hover .ds-frame-preview__stage { filter: grayscale(0) brightness(1); }"
+    },
+    {
+      "name": "Overlay Panel",
+      "kind": "custom",
+      "refersTo": "panel-overlay",
+      "description": "Painel de sobreposição dos modais. Preto sólido com filete, sobre fundo desfocado.",
+      "html": "<div class=\"ds-panel-overlay\"><p class=\"ds-panel-overlay__eyebrow\">01 / Projeto</p><h2 class=\"ds-panel-overlay__title\">FretNavigator</h2></div>",
+      "css": ".ds-panel-overlay { background: var(--color-ink, #000000); border: 1px solid var(--color-line, #1c1c1c); border-radius: 0; padding: 24px; } .ds-panel-overlay__eyebrow { margin: 0; color: var(--color-mute, #6f6f6f); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; } .ds-panel-overlay__title { margin: 16px 0 0; color: var(--color-paper, #ffffff); font-family: 'Archivo Variable', Archivo, system-ui, sans-serif; font-weight: 880; font-stretch: 125%; font-style: italic; text-transform: uppercase; font-size: 2.5rem; line-height: 0.84; letter-spacing: -0.03em; }"
+    },
+    {
+      "name": "Scroll Marker",
+      "kind": "nav",
+      "refersTo": "panel-overlay",
+      "description": "Única barra persistente. Aparece por fade depois do ecrã de abertura, assente num véu gradiente que lhe garante contraste sobre qualquer preview.",
+      "html": "<div class=\"ds-nav-marker\"><div class=\"ds-nav-marker__veil\"></div><span>DEV Gallery</span><span>06 Projetos</span></div>",
+      "css": ".ds-nav-marker { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 20px; color: var(--color-paper, #ffffff); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; pointer-events: none; } .ds-nav-marker__veil { position: absolute; inset-inline: 0; top: 0; z-index: -1; height: 96px; background: linear-gradient(to bottom, var(--color-ink, #000000), rgba(0,0,0,0.7) 45%, transparent); }"
+    }
+  ],
+  "narrative": {
+    "northStar": "A Sala de Projeção",
+    "overview": "Uma sala escura onde as coisas passam uma de cada vez. O ecrã abre a preto absoluto e só com tipografia; o scroll é a sequência, e o preto entre projetos é o corte. Cada aplicação aparece iluminada dentro da sua moldura, viva e a correr, enquanto tudo à volta se apaga para lhe dar passagem. O grão de filme sobre a página inteira não é textura decorativa — é o que impede o preto de ler como vazio digital e o faz ler como escuridão de sala.\n\nO caráter é dramático e contrastado. Não há meios-tons na hierarquia: ou é branco puro sobre preto absoluto, ou é cinza de legenda a recuar. A tensão nasce do salto de escala entre a tipografia monumental — nomes a ocupar treze por cento da largura do ecrã — e o detalhe minúsculo dos rótulos monoespaçados a onze pixels. Densidade baixa, gestos fortes: poucos elementos por ecrã, cada um com muito espaço e muita presença.\n\nO sistema serve uma curadoria apertada de projetos reais, para uso do próprio autor antes de qualquer visitante. Isso justifica a austeridade: não há nada a vender nem ninguém a convencer, por isso a interface pode desaparecer quase por completo.",
+    "keyCharacteristics": [
+      "Preto absoluto como palco, não como tema escuro",
+      "Escala tipográfica extrema — do monumental ao minúsculo, sem degraus intermédios",
+      "A única cor da página vem das próprias aplicações",
+      "Grão de filme constante sobre toda a superfície",
+      "Movimento com inércia: o scroll desliza, não salta"
+    ],
+    "rules": [
+      {
+        "name": "A Regra da Cor Emprestada",
+        "body": "O sistema não tem cor própria. Toda a cor visível na página vem dos previews das aplicações a correr. Introduzir um matiz nos elementos de interface quebra a premissa central: a sala é neutra para a obra ser vista.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra do Vermelho Único",
+        "body": "O Vermelho de Emergência é a única exceção à regra acima, e só em ações irreversíveis. Se aparecer em qualquer outro sítio, é erro.",
+        "section": "colors"
+      },
+      {
+        "name": "A Regra dos Dois Extremos",
+        "body": "Entre o Headline e o Label não existe degrau intermédio no corpo da galeria. Introduzir um tamanho de conforto no meio dilui a tensão que sustenta o sistema.",
+        "section": "typography"
+      },
+      {
+        "name": "A Regra do Rótulo Monoespaçado",
+        "body": "Todo o metadado — números, tags, estados, datas, unidades — usa a monoespaçada em caixa alta. Nunca a fonte de corpo.",
+        "section": "typography"
+      }
+    ],
+    "dos": [
+      "Do deixar que toda a cor da página venha dos previews — a interface fica em preto, branco e cinzas.",
+      "Do usar a monoespaçada em caixa alta com tracking 0.14em para todo o metadado: números, tags, estados, datas.",
+      "Do manter o preto absoluto #000000 como fundo. Não é um cinza-escuro de tema escuro.",
+      "Do reservar o Vermelho de Emergência para ações irreversíveis, e só para essas.",
+      "Do manter o grão de filme sobre a página inteira — é o que dá matéria ao preto.",
+      "Do respeitar prefers-reduced-motion: sem inércia de scroll e sem parallax quando está ativo."
+    ],
+    "donts": [
+      "Don't reintroduzir o amarelo-ácido #d7ff3e do sistema anterior, nem qualquer outra cor de acento cromática. Foi uma decisão revertida deliberadamente, não um esquecimento.",
+      "Don't criar um tamanho tipográfico de conforto entre o Headline e o Label no corpo da galeria.",
+      "Don't usar a fonte de corpo para rótulos, tags ou metadados.",
+      "Don't engrossar filetes acima de 1px nem variar a sua cor conforme o contexto.",
+      "Don't deixar que o preview de uma aplicação seja apresentado com opacidade reduzida — uma app viva a 35% lê-se como avariada, não como discreta."
+    ]
+  }
+}

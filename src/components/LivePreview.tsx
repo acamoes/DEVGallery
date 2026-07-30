@@ -114,7 +114,7 @@ export function LivePreview({ app, interactive = false, className = '' }: LivePr
       {!loaded && (
         <div className="shimmer absolute inset-0 grid place-items-center bg-surface">
           <span className="type-label flex items-center gap-2 text-mute">
-            <span className="inline-block size-2 animate-pulse bg-acid" aria-hidden />
+            <span className="inline-block size-2 animate-pulse bg-paper" aria-hidden />
             A carregar
           </span>
         </div>
@@ -125,13 +125,14 @@ export function LivePreview({ app, interactive = false, className = '' }: LivePr
 
 /** Placeholder quando não há URL embebível nem imagem. */
 function Monogram({ name, accent }: { name: string; accent?: string }) {
-  const color = accent ?? 'var(--color-acid)'
+  const color = accent ?? 'var(--color-paper)'
+  const glow = accent ? hexWithAlpha(accent) : 'rgb(255 255 255 / 0.09)'
   return (
     <div
       className="absolute inset-0 grid place-items-center"
-      style={{ background: `radial-gradient(120% 90% at 20% 0%, ${hexWithAlpha(color)} 0%, transparent 60%)` }}
+      style={{ background: `radial-gradient(120% 90% at 20% 0%, ${glow} 0%, transparent 60%)` }}
     >
-      <span className="type-display italic text-7xl select-none" style={{ color }} aria-hidden>
+      <span className="type-huge italic text-7xl select-none" style={{ color }} aria-hidden>
         {(name.trim()[0] ?? '?').toUpperCase()}
       </span>
       <span className="type-label absolute bottom-3 left-3 text-mute">Sem preview</span>

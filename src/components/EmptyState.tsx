@@ -1,25 +1,26 @@
 interface EmptyStateProps {
-  /** true quando existem apps mas o filtro/pesquisa não devolve nada. */
-  filtered: boolean
   onAdd?: () => void
 }
 
-export function EmptyState({ filtered, onAdd }: EmptyStateProps) {
+/** Galeria sem nenhuma app — só acontece antes da primeira entrada. */
+export function EmptyState({ onAdd }: EmptyStateProps) {
   return (
-    <div className="border border-line px-6 py-24 text-center sm:py-32">
-      <p className="type-display type-outline text-[clamp(3rem,10vw,7rem)] italic select-none" aria-hidden>
-        {filtered ? 'Sem resultados.' : 'Vazio.'}
+    <div className="mx-auto flex max-w-[92rem] flex-col items-center border-t border-line px-5 py-32 text-center sm:px-10 sm:py-48">
+      <p className="type-huge type-outline text-[clamp(3rem,12vw,9rem)] italic select-none" aria-hidden>
+        Vazio
       </p>
-      <p className="mx-auto mt-6 max-w-sm text-sm leading-relaxed text-mute">
-        {filtered
-          ? 'Nenhuma app corresponde ao filtro atual. Limpa a pesquisa ou escolhe outra tag.'
-          : 'Ainda não há nada na DEV Gallery. A primeira app está à distância de um clique.'}
+      {/* Sem o botão não há clique nenhum — prometê-lo seria mentir. Nesse
+          caso a mensagem aponta para onde as entradas vivem mesmo. */}
+      <p className="mx-auto mt-8 max-w-sm text-sm leading-relaxed text-mute">
+        {onAdd
+          ? 'Ainda não há nada na DEV Gallery. A primeira app está à distância de um clique.'
+          : 'Ainda não há nada na DEV Gallery. As entradas vivem em src/data/apps.json.'}
       </p>
-      {!filtered && onAdd && (
+      {onAdd && (
         <button
           type="button"
           onClick={onAdd}
-          className="type-display mt-10 inline-block bg-acid px-8 py-4 text-lg text-ink italic transition-colors hover:bg-paper"
+          className="type-display mt-12 inline-block bg-paper px-8 py-4 text-lg text-ink italic transition-colors hover:bg-mute"
         >
           Adicionar a primeira app
         </button>

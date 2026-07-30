@@ -140,8 +140,8 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
       >
         <div className="flex items-start justify-between gap-6 border-b border-line p-6 sm:p-8">
           <div>
-            <p className="type-label text-acid">{app ? 'Editar' : 'Nova entrada'} / dev</p>
-            <h2 className="type-display mt-3 text-3xl italic sm:text-5xl">
+            <p className="type-label text-mute">{app ? 'Editar' : 'Nova entrada'} / dev</p>
+            <h2 className="type-huge mt-4 text-3xl italic sm:text-5xl">
               {app ? app.name : 'Adicionar app.'}
             </h2>
           </div>
@@ -149,7 +149,7 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
             type="button"
             onClick={onClose}
             aria-label="Fechar"
-            className="grid size-11 shrink-0 place-items-center border border-line text-mute transition-colors hover:border-acid hover:text-acid"
+            className="grid size-11 shrink-0 place-items-center border border-line text-mute transition-colors hover:border-paper hover:text-paper"
           >
             ✕
           </button>
@@ -328,7 +328,7 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
               <button
                 type="submit"
                 disabled={busy}
-                className="type-display bg-acid px-6 py-4 text-lg text-ink italic transition-colors hover:bg-paper disabled:opacity-50"
+                className="type-display bg-paper px-6 py-4 text-lg text-ink italic transition-colors hover:bg-mute disabled:opacity-50"
               >
                 {busy ? 'A guardar…' : app ? 'Guardar alterações' : 'Adicionar à DEV Gallery'}
               </button>
@@ -348,7 +348,7 @@ export function AppFormModal({ app, onClose, onSubmit }: AppFormModalProps) {
 }
 
 const inputClass =
-  'w-full border border-line bg-transparent px-4 py-3 text-sm text-paper outline-none transition-colors placeholder:text-mute/50 focus:border-acid'
+  'w-full border border-line bg-transparent px-4 py-3 text-sm text-paper outline-none transition-colors placeholder:text-mute/50 focus:border-paper'
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -374,7 +374,7 @@ function ModeButton({
       onClick={onClick}
       aria-pressed={active}
       className={`type-label py-3 transition-colors ${
-        active ? 'border border-acid bg-acid text-ink' : 'border border-line text-mute hover:border-mute'
+        active ? 'border border-paper bg-paper text-ink' : 'border border-line text-mute hover:border-mute'
       }`}
     >
       {label}

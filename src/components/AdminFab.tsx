@@ -11,7 +11,7 @@ export function AdminFab({ onClick, badge = 'dev' }: { onClick: () => void; badg
       transition={{ duration: 0.6, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -3 }}
       whileTap={{ scale: 0.97 }}
-      className="type-display fixed right-5 bottom-5 z-30 flex items-center gap-2.5 bg-acid px-6 py-4 text-base text-ink italic shadow-[0_12px_40px_rgba(215,255,62,0.28)] sm:right-8 sm:bottom-8"
+      className="type-display fixed right-5 bottom-5 z-30 flex items-center gap-2.5 bg-paper px-6 py-4 text-base text-ink italic shadow-[0_12px_40px_rgba(255,255,255,0.18)] sm:right-8 sm:bottom-8"
     >
       <span className="text-xl leading-none not-italic" aria-hidden>
         +

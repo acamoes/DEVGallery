@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { pauseSmoothScroll, resumeSmoothScroll } from './useSmoothScroll'
 
 const FOCUSABLE =
   'a[href], button:not([disabled]), textarea:not([disabled]), input:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -27,6 +28,9 @@ export function useModal<T extends HTMLElement>(onClose: () => void) {
     const previouslyFocused = document.activeElement as HTMLElement | null
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'
+    // O scroll com inércia agarra a roda do rato — tem de largar enquanto
+    // o overlay estiver aberto para o conteúdo do modal poder deslizar.
+    pauseSmoothScroll()
 
     const focusables = () =>
       Array.from(container?.querySelectorAll<HTMLElement>(FOCUSABLE) ?? []).filter(
@@ -64,6 +68,7 @@ export function useModal<T extends HTMLElement>(onClose: () => void) {
     return () => {
       window.removeEventListener('keydown', onKeyDown)
       document.body.style.overflow = previousOverflow
+      resumeSmoothScroll()
       previouslyFocused?.focus?.()
     }
   }, [])

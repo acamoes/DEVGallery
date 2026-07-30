@@ -80,14 +80,14 @@ export function TokenModal({ onClose, onSaved }: TokenModalProps) {
       >
         <div className="flex items-start justify-between gap-6 border-b border-line p-6 sm:p-8">
           <div>
-            <p className="type-label text-acid">Admin / GitHub</p>
-            <h2 className="type-display mt-3 text-3xl italic sm:text-4xl">Acesso de edição.</h2>
+            <p className="type-label text-mute">Admin / GitHub</p>
+            <h2 className="type-huge mt-4 text-3xl italic sm:text-4xl">Acesso de edição.</h2>
           </div>
           <button
             type="button"
             onClick={onClose}
             aria-label="Fechar"
-            className="grid size-11 shrink-0 place-items-center border border-line text-mute transition-colors hover:border-acid hover:text-acid"
+            className="grid size-11 shrink-0 place-items-center border border-line text-mute transition-colors hover:border-paper hover:text-paper"
           >
             ✕
           </button>
@@ -100,7 +100,7 @@ export function TokenModal({ onClose, onSaved }: TokenModalProps) {
               href={pillLink}
               target="_blank"
               rel="noreferrer"
-              className="text-acid underline underline-offset-2"
+              className="text-paper underline underline-offset-2"
             >
               token pessoal do GitHub
             </a>
@@ -167,7 +167,7 @@ export function TokenModal({ onClose, onSaved }: TokenModalProps) {
             <button
               type="submit"
               disabled={busy}
-              className="type-display bg-acid px-6 py-4 text-lg text-ink italic transition-colors hover:bg-paper disabled:opacity-50"
+              className="type-display bg-paper px-6 py-4 text-lg text-ink italic transition-colors hover:bg-mute disabled:opacity-50"
             >
               {busy ? 'A validar…' : 'Guardar e ativar'}
             </button>
@@ -188,7 +188,7 @@ export function TokenModal({ onClose, onSaved }: TokenModalProps) {
 }
 
 const inputClass =
-  'w-full border border-line bg-transparent px-4 py-3 text-sm text-paper outline-none transition-colors placeholder:text-mute/50 focus:border-acid'
+  'w-full border border-line bg-transparent px-4 py-3 text-sm text-paper outline-none transition-colors placeholder:text-mute/50 focus:border-paper'
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
