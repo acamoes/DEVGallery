@@ -50,8 +50,8 @@
   {
     "id": "chituix",
     "name": "Chituix",
-    "description": "Descrição do App 5.",
-    "url": "https://example.com/app5",
+    "description": "Pequeno jogo retro criado pelo André, Clara e Afonso durante workshop de AI. Temos a Makin, o Bacon e o Bananas a enfrentar vários monstros. Um verdadeiro jogo colaborativo onde jogar em equipa facilita ganhar o jogo.",
+    "url": "https://acamoes.github.io/Chituix/",
     "tags": [
       "DEMO",
       "EXAMPLE"
