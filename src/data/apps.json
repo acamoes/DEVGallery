@@ -15,7 +15,7 @@
     "id": "fretnavigator",
     "name": "FretNavigator",
     "description": "Or URL aparece aqui em tempo real, em miniatura interativa no detalhe.",
-    "url": "https://react.dev",
+    "url": "https://acamoes.github.io/FretNavigator/",
     "tags": [
       "DEMO",
       "DOCS"
@@ -27,7 +27,7 @@
     "id": "pedaleira",
     "name": "Pedaleira",
     "description": "Terceira demonstração. Se um site bloquear iframes, muda o modo de preview para \"imagem\" e envia um screenshot — a galeria trata do resto.",
-    "url": "https://tailwindcss.com",
+    "url": "https://acamoes.github.io/Pedaleira/",
     "tags": [
       "DEMO",
       "CSS"
