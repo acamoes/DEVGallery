@@ -19,7 +19,7 @@ typography:
     fontVariation: "wdth 125"
   headline:
     fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
-    fontSize: "clamp(2rem, 5vw, 4.5rem)"
+    fontSize: "clamp(2rem, 4vw, 3.5rem)"
     fontWeight: 880
     lineHeight: 0.84
     letterSpacing: "-0.03em"
@@ -143,7 +143,7 @@ Uma paleta sem matiz: preto, branco e três cinzas, com um único vermelho reser
 
 ### Hierarchy
 - **Display** (880, `clamp(3rem, 13vw, 12rem)`, lh 0.84): O masthead do ecrã de abertura. Uma ocorrência por página.
-- **Headline** (880, `clamp(2rem, 5vw, 4.5rem)`, lh 0.84): Nome de cada projeto e títulos de painéis de sobreposição.
+- **Headline** (880, `clamp(2rem, 4vw, 3.5rem)`, lh 0.84): Nome de cada projeto e títulos de painéis de sobreposição.
 - **Title** (860, 1.5rem, lh 0.92): Botões primários e cabeçalhos de formulário.
 - **Body** (400, 0.9375rem, lh 1.625): Descrições de projeto e texto corrido. Medida confortável até ~65ch.
 - **Label** (500, 0.6875rem, tracking 0.14em, caixa alta): Rótulos monoespaçados — numeração de projetos, tags, metadados, chips de estado, botões secundários.

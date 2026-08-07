@@ -123,7 +123,7 @@ export function ProjectRow({ app, index, reversed, onSelect }: ProjectRowProps) 
 
           <motion.h2
             variants={curtain}
-            className="type-huge mt-5 text-[clamp(2rem,5vw,4.5rem)] italic [overflow-wrap:anywhere]"
+            className="type-huge mt-5 text-[clamp(2rem,4vw,3.5rem)] italic [overflow-wrap:anywhere]"
           >
             <span className="relative inline-block">
               {app.name}
